@@ -20,6 +20,8 @@ npm run build   # the build
 
 CI runs the same commands. A pull request merges when the `ci-gate` check is green and a maintainer approved it.
 
+A pull request asks for a review from the code owners of the files it changes, listed in `.github/CODEOWNERS`.
+
 A pre-commit hook formats and lints the files you staged. `npm run lint:fix` and `npm run format` fix most findings.
 
 ## Commits and pull requests
