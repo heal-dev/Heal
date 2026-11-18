@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Every job starts read-only. A job that needs more says so, with the reason.
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # A new push to a pull request replaces the run before it. Runs on main are never cancelled.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    name: Check, test, build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm test
+      - run: npm run build
+
+  # Every pull request says what a user of Heal will see, or why there is nothing to see.
+  # Dependabot's pull requests are not asked: a dependency bump with a visible effect gets its
+  # line from the maintainer who merges it.
+  changelog:
+    name: Changelog
+    if: github.event_name == 'pull_request' && github.actor != 'dependabot[bot]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          # The check compares the pull request's own commits with its base: it needs the history.
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+      - name: The pull request has a changelog entry, or says why not
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: >-
+          node --experimental-strip-types --disable-warning=ExperimentalWarning
+          scripts/changelog-check.ts --base "origin/${BASE_REF}" --head HEAD
+
+  # The one check the branch rules require. It stays the same when jobs are added above:
+  # add the new job to `needs`, and change nothing in the repository settings.
+  ci-gate:
+    name: ci-gate
+    if: always()
+    needs: [check, changelog]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Every needed job passed
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          echo "$RESULTS"
+          # A skipped job is fine: the changelog job only runs on pull requests.
+          if echo "$RESULTS" | grep -Eq '"(failure|cancelled)"'; then
+            exit 1
+          fi
