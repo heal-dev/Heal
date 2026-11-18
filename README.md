@@ -1,5 +1,9 @@
 # Heal
 
+[![CI](https://github.com/heal-dev/Heal/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/heal-dev/Heal/actions/workflows/ci.yml?query=branch%3Amain)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/heal-dev/Heal/badge)](https://scorecard.dev/viewer/?uri=github.com/heal-dev/Heal)
+
 > Software engineers don't always test their code. But when they do, they do it in production.
 
 Don't let your coding agents do the same. Let them heal your codebase before production.

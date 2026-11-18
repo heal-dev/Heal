@@ -55,3 +55,4 @@ When a user of Heal would see your change, add its line to `CHANGELOG.md` under 
 | What changed                          | `CHANGELOG.md`                             |
 | How to write a changelog entry        | `.claude/skills/update-changelog/SKILL.md` |
 | Security reports                      | `SECURITY.md`                              |
+| Who reviews what                      | `.github/CODEOWNERS`                       |

@@ -1,0 +1,15 @@
+# Who reviews what. The last matching line wins.
+
+* @PierreOucif
+
+# A change to these paths alters what CI or coding agents do. They are named one by one so that
+# a later split between teams only has to edit these lines.
+/.github/ @PierreOucif
+/package.json @PierreOucif
+/package-lock.json @PierreOucif
+/LICENSE @PierreOucif
+/SECURITY.md @PierreOucif
+/AGENTS.md @PierreOucif
+/CLAUDE.md @PierreOucif
+/.claude/ @PierreOucif
+/scripts/ @PierreOucif
