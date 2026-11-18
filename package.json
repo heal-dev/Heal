@@ -24,6 +24,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "check": "npm run typecheck && npm run lint && npm run format:check",
+    "check:changelog": "node --experimental-strip-types --disable-warning=ExperimentalWarning scripts/changelog-check.ts --base origin/main",
     "prepare": "husky"
   },
   "lint-staged": {

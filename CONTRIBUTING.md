@@ -28,7 +28,7 @@ A pre-commit hook formats and lints the files you staged. `npm run lint:fix` and
 - One concern per pull request.
 - Commits on `main` must be signed.
 - Fill the pull request template. The "Validation" and "Not verified" sections matter most: say what you ran, and what you did not check.
-- Add a line under `[Unreleased]` in `CHANGELOG.md` when a user would see the change.
+- Every pull request adds a line under `[Unreleased]` in `CHANGELOG.md`, or says why not with a commit trailer: `No-Changelog: <reason>`. CI checks it (`npm run check:changelog`). A coding agent can do it with the `update-changelog` skill (`.claude/skills/update-changelog/SKILL.md`).
 
 ## Source files
 

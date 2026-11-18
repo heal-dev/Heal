@@ -28,9 +28,12 @@ Run these, and fix what they report:
 npm run check
 npm test
 npm run build
+npm run check:changelog
 ```
 
 CI runs the same commands. Do not weaken a check, a lint rule or a test to make it pass.
+
+When a user of Heal would see your change, add its line to `CHANGELOG.md` under `[Unreleased]`. The steps are in `.claude/skills/update-changelog/SKILL.md`; follow them even if your tool does not load skills.
 
 ## Git safety
 
@@ -41,13 +44,14 @@ CI runs the same commands. Do not weaken a check, a lint rule or a test to make 
 
 ## Find current facts
 
-| For                                   | Read                       |
-| ------------------------------------- | -------------------------- |
-| What the project is                   | `README.md`                |
-| Commands                              | `package.json` (`scripts`) |
-| Lint rules                            | `eslint.config.js`         |
-| Compiler rules                        | `tsconfig.json`            |
-| What CI runs                          | `.github/workflows/ci.yml` |
-| How to contribute, commit conventions | `CONTRIBUTING.md`          |
-| What changed                          | `CHANGELOG.md`             |
-| Security reports                      | `SECURITY.md`              |
+| For                                   | Read                                       |
+| ------------------------------------- | ------------------------------------------ |
+| What the project is                   | `README.md`                                |
+| Commands                              | `package.json` (`scripts`)                 |
+| Lint rules                            | `eslint.config.js`                         |
+| Compiler rules                        | `tsconfig.json`                            |
+| What CI runs                          | `.github/workflows/ci.yml`                 |
+| How to contribute, commit conventions | `CONTRIBUTING.md`                          |
+| What changed                          | `CHANGELOG.md`                             |
+| How to write a changelog entry        | `.claude/skills/update-changelog/SKILL.md` |
+| Security reports                      | `SECURITY.md`                              |
